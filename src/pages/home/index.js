@@ -1,0 +1,109 @@
+import React, { useState } from 'react'
+import { Space, Image,  Button, Modal } from 'antd';
+import { DownloadOutlined } from '@ant-design/icons';
+import { useNavigate } from 'umi';
+import './index.less';
+
+export default () => {
+  let navigate = useNavigate();
+
+  const dumpLink = (type) => {
+    const link = type === "youtube" ? "https://www.youtube.com/channel/UCNz0CuIKBXpizEmn8akC42w" : "https://v.douyin.com/iNNrghAv/ 8@5.com";
+    window.open(link, "_blank")
+  }
+
+  const [open, setOpen] = useState(true);
+  const handleOk = e => { setOpen(false); };
+  const handleCancel = e => { setOpen(false); };
+
+  return (
+    <div className="home">
+      {/*<Modal*/}
+      {/*  title="PC网站即将下架"*/}
+      {/*  closable={false}*/}
+      {/*  keyboard={false}*/}
+      {/*  maskClosable={false}*/}
+      {/*  open={open}*/}
+      {/*  onOk={handleOk}*/}
+      {/*  onCancel={handleCancel}*/}
+      {/*  okButtonProps={{ disabled: true }}*/}
+      {/*  cancelButtonProps={{ disabled: true }}*/}
+      {/*>*/}
+      {/*  <p>*/}
+      {/*    <span>windows版本下载地址</span>*/}
+      {/*    <DownloadOutlined />*/}
+      {/*  </p>*/}
+      {/*  <p>*/}
+      {/*    <span>Mac版本下载地址</span>*/}
+      {/*    <DownloadOutlined />*/}
+      {/*  </p>*/}
+      {/*</Modal>*/}
+      <div className="homeContainer">
+        <Image
+          src='./image/login_home.png'
+          preview={false}
+          width={300}
+          style={{marginBottom: 40}}
+        />
+        <Space direction='vertical' align='center' size={10}>
+          <Image
+            src='./image/loginBtn.png'
+            preview={false}
+            width={340}
+            onClick={() => navigate("/login", {replace: false})}
+          />
+          <Image
+            src='./image/loginProtocol.png'
+            width={340}
+            preview={false}
+            onClick={() => window.open("https://taioassets.oss-cn-beijing.aliyuncs.com/Pdfs/%E4%B8%9C%E4%B8%9C%E5%8D%B0%E5%B0%BC%E8%AF%AD%E7%94%A8%E6%88%B7%E4%BD%BF%E7%94%A8%E6%9C%8D%E5%8A%A1%E5%8D%8F%E8%AE%AE.pdf", "_blank")}
+          />
+        </Space>
+      </div>
+      <div
+        className="bahasaindoLink"
+        onClick={() => window.open("http://bahasaindo.cn/", "_blank", 'width=375,height=667')}>
+        <div className="icon">
+          <Image
+            src="./image/icon_card.png"
+            preview={false}
+          />
+        </div>
+        <span>单词卡</span>
+      </div>
+      <div
+        className="bahasaindoLink ptdchatbot"
+        onClick={() => window.open("http://ptdchatbot.cn", "_blank", 'width=375,height=667')}>
+        <div className="icon">
+          <Image
+            style={{ borderRadius: 20 }}
+            src="./image/icon_card2.png"
+            preview={false}
+          />
+        </div>
+        <span>小曼同学</span>
+      </div>
+      <div
+        className="bahasaindoLink ptdpintar"
+        onClick={() => window.open("http://ptdpintar.cn", "_blank", 'width=375,height=667')}>
+        <div className="icon">
+          <Image
+            style={{ borderRadius: 20 }}
+            src="./image/icon_card1.png"
+            preview={false}
+          />
+        </div>
+        <span>东仔</span>
+      </div>
+      <div className="bahasaindoFooter">
+        <div className="friendLink">
+          <span onClick={() => dumpLink('youtube')}>东东印尼语YouTube</span>
+          <span onClick={() => dumpLink('tiktok')}>东东印尼语抖音</span>
+        </div>
+        <p>
+          D 2019-2024 PT BahasaDona All rights reserved
+        </p>
+      </div>
+    </div>
+  )
+}
