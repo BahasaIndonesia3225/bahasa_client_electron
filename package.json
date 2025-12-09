@@ -4,9 +4,6 @@
   "scripts": {
     "dev": "umi dev",
     "build": "umi build",
-    "build:Hongkong": "cross-env APP_ENV=Hongkong umi build && node ./deploy.config.js Hongkong",
-    "build:Mainland": "cross-env APP_ENV=Mainland umi build && node ./deploy.config.js Mainland",
-    "build:Taiwan": "cross-env APP_ENV=Taiwan umi build && node ./deploy.config.js Taiwan",
     "postinstall": "umi setup",
     "setup": "umi setup",
     "start": "npm run dev",

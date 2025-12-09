@@ -3,6 +3,7 @@ import { Image, Watermark, ConfigProvider } from "antd";
 import { useNavigate, useRouteProps, Outlet, connect } from 'umi';
 import zhCN from 'antd/locale/zh_CN';
 import "./index.less"
+import WinBar from '@/components/WinBar'
 
 const theme= {
   components: {
@@ -18,9 +19,12 @@ const Layout = (props) => {
 
   return (
     <div className="layout">
-      <ConfigProvider  locale={zhCN} theme={theme}>
-        <Outlet/>
-      </ConfigProvider>
+      <WinBar />
+      <div className="app-content">
+        <ConfigProvider  locale={zhCN} theme={theme}>
+          <Outlet/>
+        </ConfigProvider>
+      </div>
     </div>
   );
 }

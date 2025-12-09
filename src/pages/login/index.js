@@ -114,22 +114,6 @@ const Login = (props) => {
 
   return (
     <div className="login">
-      <Image
-        rootClassName='top_logo'
-        src='./image/login_home.png'
-        preview={false}
-        width={260}
-      />
-      <Breadcrumb
-        style={{ position: 'absolute', left: 30, top: 80 }}
-        routes={[
-          { path: '/home', breadcrumbName:
-            <>
-              <HomeOutlined style={{ fontSize: '20px' }}/>
-              <span style={{ fontSize: '20px' }}>回到主页</span>
-            </> }
-        ]}
-      />
       <div className="loginContain">
         <div className="loginContainInner">
           <Image

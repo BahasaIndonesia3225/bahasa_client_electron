@@ -6,10 +6,7 @@
 /src/.umi-production
 /src/.umi-test
 /dist
-/studypc.bahasaindo.net
-/studypc.bahasaindo.cn
-/studypc.bahasaindo.com
-/dist_electron
+/electron/dist_electron
 .swc
 
 # Log files

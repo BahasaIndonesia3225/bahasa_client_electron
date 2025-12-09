@@ -19,12 +19,6 @@ const Confidentiality = (props) => {
 
   return (
     <div className="confidentiality">
-      <Image
-        rootClassName='top_logo'
-        src='./image/login_home.png'
-        preview={false}
-        width={260}
-      />
       <div className="chapterAttention">
         <p>您是否接受保密协议？</p>
         <p>敬请留意，本课程仅供个人单独使用。如您欲购买用于多人观看学习的课程，请与我们联系以获取企业授权。</p>

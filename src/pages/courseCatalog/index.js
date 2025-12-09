@@ -129,22 +129,6 @@ const courseCatalog = (props) => {
       content={props.waterMarkContent}
       gap={[100, 100]}>
       <div className="chapterCatalog">
-        <Image
-          rootClassName='top_logo'
-          src='./image/login_home.png'
-          preview={false}
-          width={260}
-        />
-        <Breadcrumb
-          style={{ position: 'absolute', left: 30, top: 80 }}
-          routes={[
-            { path: '/home', breadcrumbName:
-                <>
-                  <HomeOutlined style={{ fontSize: '20px' }}/>
-                  <span style={{ fontSize: '20px' }}>回到主页</span>
-                </> }
-          ]}
-        />
         <div className="chapterCatalogContainer">
           <Title level={3}>
             你好呀，{props.waterMarkContent}！

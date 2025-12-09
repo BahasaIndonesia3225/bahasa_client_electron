@@ -1,16 +1,11 @@
 import { defineConfig } from "umi";
-
-const { serverConfig } = require('./server.config');
-const config = serverConfig[process.env.APP_ENV || 'Hongkong'];
-const { outputPath } = config;
-
 const baseUrl =  "http://studypc.bahasaindo.net";
 
 //配置文件，包含 Umi 所有非运行时配置
 export default defineConfig({
   title: "东东印尼语",
   npmClient: 'yarn',
-  outputPath,
+  outputPath: 'dist',
   history: { type: 'hash' },
   hash: true,  //让 build 之后的产物包含 hash 后缀, 避免浏览器加载缓存
   mock: false, //关闭 Mock 功能
@@ -54,9 +49,9 @@ export default defineConfig({
   plugins: ['@umijs/plugins/dist/dva', "umi-plugin-electron-builder"],
   dva: {},
   electronBuilder: {
-    mainSrc: 'src/main', //默认主进程目录
-    preloadSrc: 'src/preload', //默认preload目录，可选，不需要可删除
-    outputDir: 'dist_electron', //默认打包目录
+    mainSrc: 'electron/main', //默认主进程目录
+    preloadSrc: 'electron/preload', //默认preload目录，可选，不需要可删除
+    outputDir: 'electron/dist_electron', //默认打包目录
     builderOptions: {
       productName: '东东印尼语学习系统',  //应用安装完成后显示的应用名称
       win: {
