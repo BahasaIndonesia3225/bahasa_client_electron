@@ -1,6 +1,6 @@
 //app模块控制着应用程序的事件生命周期
 //BrowserWindow模块创建和管理 app 的窗口
-import { app, BrowserWindow, ipcMain, protocol } from 'electron';
+import { app, BrowserWindow, ipcMain, protocol, shell } from 'electron';
 import createProtocol from './createProtocol';
 import * as path from 'path';
 
@@ -92,3 +92,4 @@ ipcMain.handle('minimize-window', () => { mainWindow.minimize() })
 ipcMain.handle('maximize-window', () => { mainWindow.maximize() })
 ipcMain.handle('restore-window', () => { mainWindow.restore() })
 ipcMain.handle('close-app', () => { mainWindow.close() });
+ipcMain.on('open-url', (event, url) => { shell.openExternal(url) });
