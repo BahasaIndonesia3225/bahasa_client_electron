@@ -37,7 +37,12 @@ function createWindow() {
     movable: true,      //指定窗口是否可移动
     show: true,         //指定创建窗口后是否立即显示
     alwaysOnTop: false, //控制窗口是否始终保持在顶部
-    frame: false,        //是否显示窗口的外部框架（包括标题栏和控制按钮）
+    titleBarStyle: 'hidden',
+    trafficLightPosition: { x: 12, y: 14 },
+    frame: process.platform === 'darwin',        //是否显示窗口的外部框架（包括标题栏和控制按钮）
+    // https://juejin.cn/post/7481205186818654245?searchId=2025120921022569E7BED53C1648F91485
+
+
     closable: true,     //指定用户是否可以窗口关闭
     minimizable: true,  //指定用户是否可以窗口最小化
     maximizable: true,  //指定用户是否可以窗口最大化
