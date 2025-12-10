@@ -174,6 +174,5 @@ ipcMain.handle('down-load-file', (event, { fileUrl, outputFileName }) => {
 })
 ipcMain.on('shell-show-item-in-folder', (event, path) => {
   shell.showItemInFolder(path);
-
 });
 

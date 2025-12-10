@@ -46,7 +46,10 @@ export default defineConfig({
     'https://g.alicdn.com/apsara-media-box/imp-web-player/2.16.3/aliplayer-h5-min.js',
     { src: '/lib/aliplayercomponents-1.0.9.min.js' },
   ],
-  plugins: ['@umijs/plugins/dist/dva', "umi-plugin-electron-builder"],
+  plugins: [
+    '@umijs/plugins/dist/dva',
+    "umi-plugin-electron-builder"
+  ],
   dva: {},
   electronBuilder: {
     mainSrc: 'electron/main', //默认主进程目录

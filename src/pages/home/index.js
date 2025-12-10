@@ -11,10 +11,10 @@ export default () => {
   const TikTokLink = "https://v.douyin.com/iNNrghAv/ 8@5.com";
   const YouTubeLink = "https://www.youtube.com/channel/UCNz0CuIKBXpizEmn8akC42w";
   const iOSLink = "https://apps.apple.com/cn/app/bahasadong/id6502833636";
-  const AndroidLink = "https://storage.googleapis.com/video_pelajaran/aplikasiAndroid/SistemBelajar9.0.apk";
   const openLink = (link) => window.electron.openUrl(link);
 
   //下载安卓APK
+  const AndroidLink = "https://storage.googleapis.com/video_pelajaran/aplikasiAndroid/SistemBelajar9.0.apk";
   const [isDownloading, setIsDownloading] = useState(false);
   const [messageApi, contextHolder] = message.useMessage();
   const key = "home-download";

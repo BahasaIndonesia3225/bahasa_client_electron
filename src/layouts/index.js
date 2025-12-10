@@ -1,9 +1,10 @@
 import React from 'react'
 import { Image, Watermark, ConfigProvider } from "antd";
 import { useNavigate, useRouteProps, Outlet, connect } from 'umi';
+import WinBar from './WinBar';
+import SideBar from './SideBar';
 import zhCN from 'antd/locale/zh_CN';
 import "./index.less"
-import WinBar from '@/components/WinBar'
 
 const theme= {
   components: {
@@ -29,6 +30,4 @@ const Layout = (props) => {
   );
 }
 
-export default connect((state) => {
-  return { waterMarkContent: state.user.waterMarkContent }
-})(Layout)
+export default Layout;

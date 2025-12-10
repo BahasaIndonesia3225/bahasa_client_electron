@@ -23,6 +23,7 @@
     "dayjs": "^1.11.9",
     "node-notifier": "^10.0.1",
     "react-device-detect": "^2.2.3",
+    "react-fast-marquee": "^1.6.5",
     "umi": "^4.0.79",
     "yargs": "^18.0.0"
   },

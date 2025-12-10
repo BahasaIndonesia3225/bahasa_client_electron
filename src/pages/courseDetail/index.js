@@ -1,11 +1,12 @@
 import React, { useEffect, useState } from 'react'
 import { useNavigate, useLocation, connect } from 'umi';
-import { Image, Modal, Button, message, Card, Flex, Alert, Col, Row, Breadcrumb } from 'antd'
+import { Image, Modal, Button, message, Card, Flex, Alert, Col, Row, Typography } from 'antd'
 import { ExclamationCircleFilled, HomeOutlined } from '@ant-design/icons';
 import { request } from '@/services';
 import "./index.less"
 
 const { error, info } = Modal;
+const { Title, Paragraph, Text, Link } = Typography;
 
 const courseDetail = (props) => {
   const [messageApi, contextHolder] = message.useMessage();
@@ -25,6 +26,10 @@ const courseDetail = (props) => {
     player.on('ended', function() {
       switchCourse('next')
     })
+  }
+
+  const dealTitle = (title) => {
+    return title.replace(/\s+/g, "");
   }
 
   const doExercises = () => {
@@ -112,7 +117,7 @@ const courseDetail = (props) => {
             id: "player-con",
             vid: currentVod,
             playauth: content,
-            height: "430px",
+            height: "488px",
             cover: './image/cover.jpg',
             "autoplay": true,
             "isLive": false, //是否为直播播放
@@ -128,10 +133,7 @@ const courseDetail = (props) => {
               type: AliPlayerComponent.BulletScreenComponent,
               args: [
                 props.waterMarkContent + "，加油学习！",
-                {
-                  fontSize: '16px',
-                  color: 'rgba(136, 0, 174, 0.1)'
-                },
+                { fontSize: '16px', color: 'rgba(136, 0, 174, 0.1)' },
                 'random'
               ]
             }]
@@ -147,82 +149,72 @@ const courseDetail = (props) => {
     <div className="courseDetail">
       {contextHolder}
       <div className="container">
-        <Card
-          title={currentTitle}
-          extra={<a>随堂练习(共{questionNumber}道题目)</a>}
-          bordered={true}
-          hoverable
-          style={{ width: '100%', borderRadius: 27 }}
-          styles={{
-            body: {
-              padding: 20,
-              overflow: 'hidden',
-            },
-          }}
-        >
-          <Flex justify="space-between">
-            <div style={{ width: '650px' }} id="player-con"/>
-            <Flex
-              vertical
-              align="flex-end"
-              justify="space-between"
-              flex="1"
-              style={{
-                paddingLeft: 20,
-              }}
-            >
-              <Alert
-                style={{ border: 0, borderRadius: 27 }}
-                message="温馨提示"
-                description={
-                  <div className="chapterAttention">
-                    <ul>
-                      <li>
-                        <span>学习过程中请勿开启录屏软件或第三方下载软件，否则您的帐号可能会受到限制。</span>
-                      </li>
-                      <li>
-                        <span>如果您的网络不佳，视频加载可能需要10-20秒，期间若</span>
-                        <span style={{color: '#ff0000'}}>出现转圈、黑屏、有声音没画面等情况，</span>
-                        <span> 请耐心等待。如果长时问无法加载，请切换网络重新登陆。</span>
-                      </li>
-                    </ul>
-                    <div className="chapterAttentionImg">
-                      <Image src='./image/img_intro.png' preview={false}/>
-                    </div>
+        <Title level={3}>{currentTitle}</Title>
+        <Text><a>随堂练习(共{questionNumber}道题目)</a></Text>
+        <Flex justify="space-between">
+          <div style={{ width: '650px' }} id="player-con"/>
+          <Flex
+            vertical
+            align="flex-end"
+            justify="space-between"
+            flex="1"
+            style={{
+              paddingLeft: 20,
+            }}
+          >
+            <Alert
+              style={{ border: 0, borderRadius: 27 }}
+              message="温馨提示"
+              description={
+                <div className="chapterAttention">
+                  <ul>
+                    <li>
+                      <span>学习过程中请勿开启录屏软件或第三方下载软件，否则您的帐号可能会受到限制。</span>
+                    </li>
+                    <li>
+                      <span>如果您的网络不佳，视频加载可能需要10-20秒，期间若</span>
+                      <span style={{color: '#ff0000'}}>出现转圈、黑屏、有声音没画面等情况，</span>
+                      <span> 请耐心等待。如果长时问无法加载，请切换网络重新登陆。</span>
+                    </li>
+                  </ul>
+                  <div className="chapterAttentionImg">
+                    <Image src='./image/img_intro.png' preview={false}/>
                   </div>
+                </div>
+              }
+              type="info"
+            />
+            <Row gutter={16}>
+              <Col className="gutter-row" span={8}>
+                <Image
+                  src='./image/prveCourse.png'
+                  preview={false}
+                  onClick={() => switchCourse('prve')}
+                />
+              </Col>
+              <Col className="gutter-row" span={8}>
+                <Image
+                  src='./image/nextCourse.png'
+                  preview={false}
+                  onClick={() => switchCourse('next')}
+                />
+              </Col>
+              <Col className="gutter-row" span={8}>
+                {
+                  questionNumber > 0 && (
+                    <Image
+                      src='./image/doExecuse.png'
+                      preview={false}
+                      onClick={doExercises}
+                    />
+                  )
                 }
-                type="info"
-              />
-              <Row gutter={16}>
-                <Col className="gutter-row" span={8}>
-                  <Image
-                    src='./image/prveCourse.png'
-                    preview={false}
-                    onClick={() => switchCourse('prve')}
-                  />
-                </Col>
-                <Col className="gutter-row" span={8}>
-                  <Image
-                    src='./image/nextCourse.png'
-                    preview={false}
-                    onClick={() => switchCourse('next')}
-                  />
-                </Col>
-                <Col className="gutter-row" span={8}>
-                  {
-                    questionNumber > 0 && (
-                      <Image
-                        src='./image/doExecuse.png'
-                        preview={false}
-                        onClick={doExercises}
-                      />
-                    )
-                  }
-                </Col>
-              </Row>
-            </Flex>
+              </Col>
+            </Row>
           </Flex>
-        </Card>
+        </Flex>
+
+
       </div>
     </div>
   )
