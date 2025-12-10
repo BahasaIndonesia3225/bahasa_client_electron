@@ -1,6 +1,9 @@
 //app模块控制着应用程序的事件生命周期
 //BrowserWindow模块创建和管理 app 的窗口
 import { app, BrowserWindow, ipcMain, protocol, shell } from 'electron';
+import https from 'https';
+const fs = require("fs");
+const os = require("os");
 import createProtocol from './createProtocol';
 import * as path from 'path';
 
@@ -38,11 +41,8 @@ function createWindow() {
     show: true,         //指定创建窗口后是否立即显示
     alwaysOnTop: false, //控制窗口是否始终保持在顶部
     titleBarStyle: 'hidden',
-    trafficLightPosition: { x: 12, y: 14 },
-    frame: process.platform === 'darwin',        //是否显示窗口的外部框架（包括标题栏和控制按钮）
-    // https://juejin.cn/post/7481205186818654245?searchId=2025120921022569E7BED53C1648F91485
-
-
+    trafficLightPosition: { x: 12, y: 14 },  //macOS自定义红绿灯位置
+    frame: process.platform === 'darwin',    //是否显示窗口的外部框架（包括标题栏和控制按钮）、macos显示原生的titlebar
     closable: true,     //指定用户是否可以窗口关闭
     minimizable: true,  //指定用户是否可以窗口最小化
     maximizable: true,  //指定用户是否可以窗口最大化
@@ -56,12 +56,26 @@ function createWindow() {
     },
   });
 
-  //隐藏窗口的菜单
-  mainWindow.setMenu(null);
+  // 添加窗口状态监听器
+  mainWindow.on('maximize', () => {
+    mainWindow.webContents.send('window-state-changed', 'maximized');
+  });
+
+  mainWindow.on('unmaximize', () => {
+    mainWindow.webContents.send('window-state-changed', 'unmaximized');
+  });
+
+  mainWindow.on('enter-full-screen', () => {
+    mainWindow.webContents.send('window-state-changed', 'fullscreen');
+  });
+
+  mainWindow.on('leave-full-screen', () => {
+    mainWindow.webContents.send('window-state-changed', 'unmaximized');
+  });
 
   if (isDevelopment) {
     mainWindow.loadURL('http://localhost:8888');
-    // mainWindow.webContents.openDevTools();
+    mainWindow.webContents.openDevTools();
   } else {
     createProtocol('app');
     mainWindow.loadURL('app://./index.html');
@@ -93,8 +107,73 @@ app.on('activate', () => {
   }
 });
 
-ipcMain.handle('minimize-window', () => { mainWindow.minimize() })
-ipcMain.handle('maximize-window', () => { mainWindow.maximize() })
-ipcMain.handle('restore-window', () => { mainWindow.restore() })
-ipcMain.handle('close-app', () => { mainWindow.close() });
 ipcMain.on('open-url', (event, url) => { shell.openExternal(url) });
+ipcMain.handle('close-window', () => { mainWindow.close() });
+ipcMain.handle('minimize-window', () => { mainWindow.minimize() })
+ipcMain.handle('maximize-window', () => {
+  if (mainWindow.isMaximized()) {
+    //如果已经最大化，则恢复
+    mainWindow.unmaximize()
+  } else {
+    //否则最大化窗口
+    mainWindow.maximize();
+  }
+})
+ipcMain.handle('get-window-state', () => {
+  if (mainWindow.isMaximized()) return 'maximized';
+  if (mainWindow.isFullScreen()) return 'fullscreen';
+  return 'normal';
+});
+
+//下载
+ipcMain.handle('down-load-file', (event, { fileUrl, outputFileName }) => {
+  return new Promise((resolve, reject) => {
+    const outputLocationPath = path.join(os.tmpdir(), outputFileName);
+    const file = fs.createWriteStream(outputLocationPath);
+
+    https.get(fileUrl, (response) => {
+      // 获取文件大小
+      // @ts-ignore
+      const totalBytes = parseInt(response.headers['content-length'], 10);
+      let receivedBytes = 0;
+
+      // 发送初始进度
+      event.sender.send('download-progress', {
+        progress: 0,
+        receivedBytes: 0,
+        totalBytes
+      });
+
+      response.on('data', (chunk) => {
+        receivedBytes += chunk.length;
+        const progress = totalBytes > 0 ? (receivedBytes / totalBytes) : 0;
+
+        // 发送进度更新
+        event.sender.send('download-progress', {
+          progress,
+          receivedBytes,
+          totalBytes
+        });
+      });
+
+      response.pipe(file);
+
+      file.on('finish', () => {
+        file.close();
+        resolve(outputLocationPath);
+      });
+
+      file.on('error', (err: any) => {
+        fs.unlink(outputLocationPath, () => {});
+        reject(err);
+      });
+    }).on('error', (err) => {
+      reject(err);
+    });
+  });
+})
+ipcMain.on('shell-show-item-in-folder', (event, path) => {
+  shell.showItemInFolder(path);
+
+});
+
