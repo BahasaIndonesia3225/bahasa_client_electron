@@ -29,7 +29,7 @@ const courseDetail = (props) => {
   }
 
   const dealTitle = (title) => {
-    return title.replace(/\s+/g, "");
+    return title.replace(/[【】]/g, '').replace('，', ':');
   }
 
   const doExercises = () => {
@@ -149,22 +149,15 @@ const courseDetail = (props) => {
     <div className="courseDetail">
       {contextHolder}
       <div className="container">
-        <Title level={3}>{currentTitle}</Title>
-        <Text><a>随堂练习(共{questionNumber}道题目)</a></Text>
         <Flex justify="space-between">
-          <div style={{ width: '650px' }} id="player-con"/>
-          <Flex
-            vertical
-            align="flex-end"
-            justify="space-between"
-            flex="1"
-            style={{
-              paddingLeft: 20,
-            }}
-          >
+          <div className="playContainer">
+            <div id="player-con"/>
+            <Title level={4}>{dealTitle(currentTitle)}</Title>
+            <Text>随堂练习(共{questionNumber}道题目)</Text>
+          </div>
+          <div className="attentionContainer">
             <Alert
-              style={{ border: 0, borderRadius: 27 }}
-              message="温馨提示"
+              style={{ border: 0, borderRadius: 12, marginBottom: 12 }}
               description={
                 <div className="chapterAttention">
                   <ul>
@@ -184,7 +177,7 @@ const courseDetail = (props) => {
               }
               type="info"
             />
-            <Row gutter={16}>
+            <Row gutter={12}>
               <Col className="gutter-row" span={8}>
                 <Image
                   src='./image/prveCourse.png'
@@ -211,10 +204,8 @@ const courseDetail = (props) => {
                 }
               </Col>
             </Row>
-          </Flex>
+          </div>
         </Flex>
-
-
       </div>
     </div>
   )

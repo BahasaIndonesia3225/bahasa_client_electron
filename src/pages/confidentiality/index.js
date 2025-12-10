@@ -36,7 +36,7 @@ const Confidentiality = (props) => {
           src="./image/img_decorate.png"
         />
         <Space
-          style={{ width: '100%', marginTop: 16 }}
+          style={{ width: '100%', marginTop: 12 }}
           direction='vertical'
           align='center'
           size={16}>
@@ -57,7 +57,7 @@ const Confidentiality = (props) => {
       <Image
         rootClassName="chapterPrison"
         preview={false}
-        width={560}
+        width={460}
         src="./image/prison.png"/>
     </div>
   )
