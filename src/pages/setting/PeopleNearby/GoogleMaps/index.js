@@ -4,11 +4,11 @@ import {APIProvider, Map, useMap, AdvancedMarker, Pin} from '@vis.gl/react-googl
 import { request } from "@/services";
 
 export default function MapContainer(props) {
-  const [isLoading, setIsLoading] = useState(true);
   const [poiMarkers, setPoiMarkers] = useState([]);
   const [center, setCenter] = useState({lat: -6.189465707537651, lng: 106.82024454977989});
 
   //地图加载成功
+  const [isLoading, setIsLoading] = useState(true);
   const onLoadMap = () => {
     setIsLoading(false)
     getLocation()
@@ -63,7 +63,7 @@ export default function MapContainer(props) {
 
   return (
     <APIProvider
-      apiKey={'AIzaSyDNl5Yr1UFu_AZVBKi5LH89fxkd7wnWo24'}
+      apiKey={'AIzaSyDA862xirqWG1xNKCJY6FB3YIeh4WzDMbU'}
       onLoad={() => onLoadMap()}>
       <Map
         style={{ width: '100%', height: '500px' }}
