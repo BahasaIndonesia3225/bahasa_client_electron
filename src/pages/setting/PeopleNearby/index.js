@@ -41,12 +41,7 @@ export default () => {
           />
         </Paragraph>
       </Typography>
-      {mapEngine === 1 && (
-        <AMap />
-      )}
-      {mapEngine === 2 && (
-        <GoogleMaps locations={peopleNearby} />
-      )}
+      { mapEngine === 1 ? <AMap /> : <GoogleMaps /> }
       {peopleNearby.map((item, index) => (
         <div key={item.name}>
           <Image

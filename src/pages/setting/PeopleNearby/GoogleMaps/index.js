@@ -1,7 +1,7 @@
 import React, { useState, useEffect } from 'react'
 import { Spin } from 'antd';
-import {APIProvider, Map, useMap, AdvancedMarker, Pin} from '@vis.gl/react-google-maps';
 import { request } from "@/services";
+import {APIProvider, Map, useMap, AdvancedMarker, Pin} from '@vis.gl/react-google-maps';
 
 export default function MapContainer(props) {
   const [poiMarkers, setPoiMarkers] = useState([]);
@@ -12,37 +12,6 @@ export default function MapContainer(props) {
   const onLoadMap = () => {
     setIsLoading(false)
     getLocation()
-  }
-
-  //获取用户位置
-  const getLocation = async () => {
-    var options = {
-      enableHighAccuracy: true,
-      timeout: 5000,
-      maximumAge: 0,
-    };
-    const success = (position) => {
-      const { locations } = props;
-      const { latitude: lat, longitude: lng } = position.coords;
-      setCenter({ lat, lng });
-      setPoiMarkers([{lng, lat, name: 'me'}, ...locations]);
-      updateCoordinate(lng, lat);
-    }
-    const error = (error) => {
-      // Dialog.alert({
-      //   content: '获取定位失败',
-      //   onConfirm: () => {
-      //     const { locations } = props;
-      //     setPoiMarkers(locations);
-      //   },
-      // })
-    }
-    //WGS84坐标
-    if(navigator.geolocation) {
-      navigator.geolocation.getCurrentPosition(success, error, options);
-    }else {
-      error()
-    }
   }
 
   //位置信息更新
@@ -67,7 +36,7 @@ export default function MapContainer(props) {
       onLoad={() => onLoadMap()}>
       <Map
         style={{ width: '100%', height: '500px' }}
-        mapId='2d961d7bb1e17687'
+        mapId='9bdab6bf6bd31719'
         center={center}
         defaultZoom={10}
         minZoom={7}
