@@ -29,7 +29,7 @@ export default defineConfig({
     { path: "/courseList", component: "courseList", name: "课程目录" },
     { path: "/confidentiality", component: "confidentiality", name: "保密协议" },
     { path: "/courseDetail", component: "courseDetail", name: "课程查看" },
-    // { path: "/setting", component: "setting", name: "设置" },
+    { path: "/setting", component: "setting", name: "设置" },
     { path: "/doExercises", component: "doExercises", name: "习题练习" },
     // { path: "/aboutUs", component: "aboutUs", name: "关于我们" },
     // { path: "/peopleNearby", component: "peopleNearby", name: "附近的人" },

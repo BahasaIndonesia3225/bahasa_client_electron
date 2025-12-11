@@ -180,6 +180,7 @@ const courseDetail = (props) => {
             <Row gutter={12}>
               <Col className="gutter-row" span={8}>
                 <Image
+                  className="playBtn"
                   src='./image/prveCourse.png'
                   preview={false}
                   onClick={() => switchCourse('prve')}
@@ -187,6 +188,7 @@ const courseDetail = (props) => {
               </Col>
               <Col className="gutter-row" span={8}>
                 <Image
+                  className="playBtn"
                   src='./image/nextCourse.png'
                   preview={false}
                   onClick={() => switchCourse('next')}
@@ -196,6 +198,7 @@ const courseDetail = (props) => {
                 {
                   questionNumber > 0 && (
                     <Image
+                      className="playBtn"
                       src='./image/doExecuse.png'
                       preview={false}
                       onClick={doExercises}

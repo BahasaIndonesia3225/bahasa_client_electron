@@ -10,6 +10,10 @@ export default () => {
   const location = useLocation();
   const isHomePage = location.pathname === '/';
 
+  const dumpSetting = () => {
+    navigate("/setting", { replace: true })
+  }
+
   return (
     <div className="MacOSBar" >
       <div className="leftMenu">
@@ -43,7 +47,7 @@ export default () => {
         <SettingOutlined
           title="设置"
           className="iconfont"
-          onClick={() => {}}
+          onClick={() => dumpSetting()}
         />
       </div>
     </div>

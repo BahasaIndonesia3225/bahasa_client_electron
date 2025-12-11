@@ -32,6 +32,10 @@ export default () => {
     return () => { window.electron.removeWindowStateListener() };
   }, []);
 
+  const dumpSetting = () => {
+    navigate("/setting", { replace: true })
+  }
+
   return (
     <div className="Win32Bar" >
       <div className="leftMenu">
@@ -65,7 +69,7 @@ export default () => {
         <SettingOutlined
           title="设置"
           className="iconfont"
-          onClick={() => {}}
+          onClick={() => dumpSetting()}
         />
         <div className="split-line"></div>
         <MinusOutlined

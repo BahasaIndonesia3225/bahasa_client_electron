@@ -1,7 +1,7 @@
 import React, { useState, useEffect } from 'react'
 import { useNavigate, useLocation, connect } from 'umi';
-import { Space, Modal, Radio, List, Image, Empty, Skeleton, Breadcrumb, Watermark } from 'antd'
-import { LockFilled, ExclamationCircleFilled, HomeOutlined } from '@ant-design/icons'
+import { Space, Modal, Radio, List, Image, Empty, Skeleton, Table, Watermark, Tag } from 'antd'
+import { LockFilled, UnlockOutlined, ExclamationCircleFilled, HomeOutlined } from '@ant-design/icons'
 import { request } from "@/services";
 import './index.less';
 
@@ -12,7 +12,81 @@ const courseList = (props) => {
   const { id, name, iconArt } = stateParams.state;
   const [loading, setLoading] = useState(false)
   const [courseListData, setCourseListData] = useState([]);
-  const [current, setCurrent] = useState(1);
+
+  useEffect(() => { queryCourse() }, [])
+  const queryCourse = () => {
+    setLoading(true)
+    request.get('/business/web/course/find/TYAIILon')
+      .then(res => {
+        const { success, content } = res;
+        setLoading(false)
+        if(success) {
+          let { sections } = content;
+          let courseList = sections.filter(j => j.chapterId === id )
+          courseList = courseList.sort((a, b) => a.sort - b.sort);
+          courseList = courseList.map((item, index) => {
+            //判断上一节答题有没有通过，1 通过，0 未通过
+            let isPass_ = 1;
+            if (index > 0) isPass_ = courseList[index - 1].isPass;
+            return {
+              ...item,
+              isPass: isPass_
+            }
+          })
+          setCourseListData(courseList);
+
+          props.dispatch({
+            type: "user/changeCourseList",
+            payload: courseList
+          })
+
+        }
+      })
+  }
+
+  const columns = [
+    { title: '标题', dataIndex: 'title', key: 'title' },
+    {
+      width: 160,
+      title: '最后更新时间',
+      dataIndex: 'updatedAt',
+      key: 'updatedAt'
+    },
+    {
+      width: 100,
+      title: '题目数量',
+      dataIndex: 'questionNum',
+      key: 'questionNum'
+    },
+    {
+      width: 100,
+      title: '是否锁定',
+      dataIndex: 'isPass',
+      key: 'isPass',
+      render: (_, record, index) => {
+        const {isPass} = record;
+        if(index > 0 && isPass === 0) {
+          return <LockFilled fontSize={20}/>
+        }else {
+          return <UnlockOutlined fontSize={20} />
+        }
+      },
+    },
+    {
+      width: 100,
+      title: '操作',
+      key: 'action',
+      render: (_, record, index) => {
+        const {id, title, vod, isPass} = record;
+        return (
+          <Space size="middle">
+            <a>收藏</a>
+            <a onClick={() => dumpDetail({ id, title, vod, isPass }, index)}>观看</a>
+          </Space>
+        )
+      },
+    },
+  ];
 
   //观看课程
   const navigate = useNavigate();
@@ -60,30 +134,6 @@ const courseList = (props) => {
     }
   }
 
-  const queryCourse = () => {
-    setLoading(true)
-    request.get('/business/web/course/find/TYAIILon')
-      .then(res => {
-        const { success, content } = res;
-        setLoading(false)
-        if(success) {
-          let { sections } = content;
-          let courseList = sections.filter(j => j.chapterId === id )
-          courseList = courseList.sort((a, b) => a.sort - b.sort)
-          setCourseListData(courseList);
-
-          props.dispatch({
-            type: "user/changeCourseList",
-            payload: courseList
-          })
-
-        }
-      })
-  }
-  useEffect(() => {
-    queryCourse()
-  }, [])
-
   return (
     <Watermark
       content={props.waterMarkContent}
@@ -108,37 +158,17 @@ const courseList = (props) => {
                 />
               ) : (
                 courseListData.length ? (
-                  <List
+                  <Table
+                    bordered={true}
                     size="small"
-                    bordered
                     dataSource={courseListData}
-                    current={current}
+                    columns={columns}
                     pagination={{
-                      pageSize: 20,
-                      showSizeChanger: false,
                       showTotal: (total, range) => {
                         return `第${range[0]}-${range[1]}条 / 共${total}条`
                       },
-                      onChange: (page, pageSize) => setCurrent(page)
                     }}
-                    renderItem={(item, index) => {
-                      const {id, title, vod, isPass, questionNum} = item;
-                      //判断上一节答题有没有通过，1 通过，0 未通过
-                      let isPass_ = 0;
-                      if (index > 0) isPass_ = courseListData[index - 1].isPass;
-                      return (
-                        <List.Item
-                          key={vod}
-                          onClick={() => dumpDetail({id, title, vod, isPass: isPass_}, index)}
-                        >
-                          <div className="courseItem">
-                            <span>{current === 1 ? index + 1 : (current - 1) * 20 + index + 1}</span>
-                            <span>{title.split('】')[1]}</span>
-                            {(index > 0 && isPass_ === 0) ? <LockFilled fontSize={20}/> : <></>}
-                          </div>
-                        </List.Item>
-                      )
-                    }}
+                    scroll={{ x: '100%', y: 400 }}
                   />
                 ) : <Empty description='暂无数据' style={{marginTop: '50%'}}/>
               )
