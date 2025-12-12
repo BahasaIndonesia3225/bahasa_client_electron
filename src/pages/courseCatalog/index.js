@@ -94,11 +94,10 @@ const courseCatalog = (props) => {
   }
 
   //获取公告
-  const [remarks, setRemarks] = useState("");
   const getRemarks = async () => {
-    const remarkResponse = await request.post('/business/web/notice/all');
-    const {content} = remarkResponse;
-    setRemarks(content.remark);
+    const { content } = await request.post('/business/web/notice/all');
+    const { remark } = content;
+    window.electron.setSettings("notice", remark);
   }
 
   useEffect(() => {
@@ -152,12 +151,6 @@ const courseCatalog = (props) => {
               </ul>
             }
             style={{ marginBottom: '16px', border: 0, background: 'rgba(255, 255, 255, 0.5)' }}
-          />
-          <Alert
-            style={{ marginBottom: '16px' }}
-            description={remarks}
-            type="info"
-            showIcon
           />
           {
             loading ? (

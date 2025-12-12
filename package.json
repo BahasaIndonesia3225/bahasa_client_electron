@@ -17,11 +17,12 @@
   },
   "dependencies": {
     "@amap/amap-jsapi-loader": "^1.0.1",
-    "@vis.gl/react-google-maps": "^1.4.0",
     "@ant-design/icons": "^5.5.1",
     "@ant-design/x": "^2.1.0",
+    "@vis.gl/react-google-maps": "^1.4.0",
     "antd": "6",
     "dayjs": "^1.11.9",
+    "electron-store": "^8.0.0",
     "node-notifier": "^10.0.1",
     "react-device-detect": "^2.2.3",
     "react-fast-marquee": "^1.6.5",

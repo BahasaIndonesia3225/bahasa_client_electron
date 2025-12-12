@@ -79,7 +79,7 @@ export default () => {
   }
 
   return (
-    <div  className="BindPhone">
+    <div className="BindPhone">
       {contextHolder}
       <Typography>
         <Title level={2}>手机号码</Title>

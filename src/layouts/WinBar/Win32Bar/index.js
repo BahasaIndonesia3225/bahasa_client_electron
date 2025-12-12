@@ -1,6 +1,5 @@
 import React, { useState, useEffect } from 'react'
-import { useNavigate, useLocation } from 'umi';
-import { Alert, Button } from 'antd';
+import { Alert } from 'antd';
 import Marquee from 'react-fast-marquee';
 import {
   SettingOutlined,
@@ -13,10 +12,8 @@ import {
 } from '@ant-design/icons';
 import "./index.less"
 
-export default () => {
-  const navigate = useNavigate();
-  const location = useLocation();
-  const isHomePage = location.pathname === '/';
+export default ({ isLogin, isHomePage, dumpBack, dumpSetting, notice }) => {
+
   const [isMaximize, setIsMaximize] = useState(false);
   useEffect(() => {
     // 获取初始窗口状态
@@ -32,10 +29,6 @@ export default () => {
     return () => { window.electron.removeWindowStateListener() };
   }, []);
 
-  const dumpSetting = () => {
-    navigate("/setting", { replace: true })
-  }
-
   return (
     <div className="Win32Bar" >
       <div className="leftMenu">
@@ -46,25 +39,27 @@ export default () => {
           <LeftOutlined
             title="返回"
             className="iconfont"
-            onClick={() => {
-              navigate(-1);
-            }}
+            onClick={() => dumpBack()}
           />
         )}
       </div>
-      <Alert
-        style={{ width: 400, height: 26 }}
-        type="info"
-        showIcon
-        title={
-          <Marquee
-            speed={20}
-            pauseOnHover={true}
-            gradient={false}>
-            由于公司去挪威团建，12月11号全天无法回复信息。请同学们先留言
-          </Marquee>
-        }
-      />
+      {
+        notice && (
+          <Alert
+            style={{ width: 400, height: 26 }}
+            type="info"
+            showIcon
+            title={
+              <Marquee
+                speed={20}
+                pauseOnHover={true}
+                gradient={false}>
+                {notice}
+              </Marquee>
+            }
+          />
+        )
+      }
       <div className="rightMenu">
         <SettingOutlined
           title="设置"
@@ -75,7 +70,9 @@ export default () => {
         <MinusOutlined
           title="最小化"
           className="iconfont"
-          onClick={() => { window.electron.minimizeWindow() }}
+          onClick={() => {
+            window.electron.minimizeWindow()
+          }}
         />
         {!isMaximize && (
           <ArrowsAltOutlined
@@ -100,7 +97,9 @@ export default () => {
         <CloseOutlined
           title="关闭"
           className="iconfont"
-          onClick={() => { window.electron.closeWindow() }}
+          onClick={() => {
+            window.electron.closeWindow()
+          }}
         />
       </div>
     </div>

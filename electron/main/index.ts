@@ -1,11 +1,12 @@
 //app模块控制着应用程序的事件生命周期
 //BrowserWindow模块创建和管理 app 的窗口
 import { app, BrowserWindow, ipcMain, protocol, shell } from 'electron';
+import * as path from 'path';
+import Store from 'electron-store';
 import https from 'https';
+import createProtocol from './createProtocol';
 const fs = require("fs");
 const os = require("os");
-import createProtocol from './createProtocol';
-import * as path from 'path';
 
 protocol.registerSchemesAsPrivileged([
   {
@@ -175,5 +176,14 @@ ipcMain.handle('down-load-file', (event, { fileUrl, outputFileName }) => {
 })
 ipcMain.on('shell-show-item-in-folder', (event, path) => {
   shell.showItemInFolder(path);
+});
+
+//持久化储存
+const store = new Store();
+ipcMain.handle('get-settings', (event, key) => {
+  return store.get(key);
+});
+ipcMain.handle('set-settings', (event, key, value) => {
+  store.set(key, value);
 });
 

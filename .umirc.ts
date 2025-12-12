@@ -1,5 +1,4 @@
 import { defineConfig } from "umi";
-const baseUrl =  "http://studypc.bahasaindo.net";
 
 //配置文件，包含 Umi 所有非运行时配置
 export default defineConfig({
@@ -12,14 +11,6 @@ export default defineConfig({
   clientLoader: {}, //路由数据预加载
   theme: {
     '@primary-color': '#1DA57A'
-  },
-  proxy: {
-    //备用环境
-    '/prod-api': {
-      'target': baseUrl + '/prod-api/',
-      'changeOrigin': true,
-      'pathRewrite': { '^/prod-api' : '' },
-    },
   },
   routes: [
     { path: "/", component: "home" },

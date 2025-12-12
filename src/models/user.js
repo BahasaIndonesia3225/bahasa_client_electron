@@ -8,33 +8,37 @@ const generatesRandomNumber = () => {
 }
 
 export default {
+  namespace: 'user',
   state: {
-    token: localStorage.getItem("token") || "",
-    waterMarkContent: localStorage.getItem("waterMarkContent") || generatesRandomNumber(),
-    courseList: localStorage.getItem("courseList") ? JSON.parse(localStorage.getItem("courseList")) : [],
-    deviceNum: localStorage.getItem("deviceNum") || 0,
-    deviceList: localStorage.getItem("deviceList") ? JSON.parse(localStorage.getItem("deviceList")) : [],
+    token: "",
+    waterMarkContent: generatesRandomNumber(),
+    courseList: [],
+    deviceNum: 0,
+    deviceList: [],
   },
   reducers: {
     changeToken(state, { payload }) {
       localStorage.setItem("token", payload);
       return { ...state, token: payload };
     },
+    clearToken(state) {
+      localStorage.removeItem("token");
+      return { ...state, token: "" };
+    },
     changeWaterMarkContent(state, { payload }) {
-      localStorage.setItem("waterMarkContent", payload);
       return { ...state, waterMarkContent: payload };
     },
     changeCourseList(state, { payload }) {
-      localStorage.setItem("courseList", JSON.stringify(payload));
       return { ...state, courseList: payload };
     },
     changeDeviceNum(state, { payload }) {
-      localStorage.setItem("deviceNum", JSON.stringify(payload));
       return { ...state, deviceNum: payload };
     },
     changeDeviceList(state, { payload }) {
-      localStorage.setItem("deviceList", JSON.stringify(payload));
       return { ...state, deviceList: payload };
     }
   },
+  effects: {
+
+  }
 };

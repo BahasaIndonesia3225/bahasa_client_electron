@@ -117,7 +117,9 @@ const courseDetail = (props) => {
             id: "player-con",
             vid: currentVod,
             playauth: content,
-            height: "488px",
+            width: '100%',
+            height: "100%",
+            autofit: true,
             cover: './image/cover.jpg',
             "autoplay": true,
             "isLive": false, //是否为直播播放
@@ -149,7 +151,7 @@ const courseDetail = (props) => {
     <div className="courseDetail">
       {contextHolder}
       <div className="container">
-        <Flex justify="space-between">
+        <Flex justify="space-between" style={{ height: '100%' }}>
           <div className="playContainer">
             <div id="player-con"/>
             <Title level={4}>{dealTitle(currentTitle)}</Title>

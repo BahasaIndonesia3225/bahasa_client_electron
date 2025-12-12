@@ -1,4 +1,4 @@
-import { contextBridge, ipcRenderer } from 'electron';
+import {contextBridge, ipcRenderer} from 'electron';
 
 const api = {
   platform: process.platform,
@@ -23,7 +23,10 @@ const api = {
   removeDownloadProgressListener: () =>
     ipcRenderer.removeAllListeners('download-progress'),
   shellShowItemInFolder: (path: string) =>
-    ipcRenderer.send('shell-show-item-in-folder', path)
+    ipcRenderer.send('shell-show-item-in-folder', path),
+  //持久化储存
+  getSettings: (key: string) => ipcRenderer.invoke('get-settings', key),
+  setSettings: (key: string, value: any) => ipcRenderer.invoke('set-settings', key, value)
 };
 
 //预加载脚本在渲染器加载网页之前注入

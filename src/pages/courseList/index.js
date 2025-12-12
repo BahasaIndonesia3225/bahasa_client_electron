@@ -159,6 +159,7 @@ const courseList = (props) => {
               ) : (
                 courseListData.length ? (
                   <Table
+                    key='vod'
                     bordered={true}
                     size="small"
                     dataSource={courseListData}
