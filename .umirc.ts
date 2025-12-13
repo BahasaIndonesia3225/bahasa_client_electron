@@ -2,6 +2,7 @@ import { defineConfig } from "umi";
 
 //配置文件，包含 Umi 所有非运行时配置
 export default defineConfig({
+  esbuildMinifyIIFE: true,
   title: "东东印尼语",
   npmClient: 'yarn',
   outputPath: 'dist',
@@ -22,8 +23,6 @@ export default defineConfig({
     { path: "/courseDetail", component: "courseDetail", name: "课程查看" },
     { path: "/setting", component: "setting", name: "设置" },
     { path: "/doExercises", component: "doExercises", name: "习题练习" },
-    // { path: "/aboutUs", component: "aboutUs", name: "关于我们" },
-    // { path: "/peopleNearby", component: "peopleNearby", name: "附近的人" },
   ],
   alias: {},
   links: [
