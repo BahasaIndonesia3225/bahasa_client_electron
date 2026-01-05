@@ -93,15 +93,7 @@ const courseCatalog = (props) => {
     setLoading(false)
   }
 
-  //获取公告
-  const getRemarks = async () => {
-    const { content } = await request.post('/business/web/notice/all');
-    const { remark } = content;
-    window.electron.setSettings("notice", remark);
-  }
-
   useEffect(() => {
-    getRemarks();
     queryChapters()
   }, [])
 

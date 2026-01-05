@@ -1,7 +1,8 @@
 import React, { useState, useEffect } from 'react'
-import { Space, Image, Flex, Button, message } from 'antd';
+import { Space, Image, Flex, Button, message, Select } from 'antd';
 import { AndroidFilled, AppleFilled } from '@ant-design/icons';
 import { useNavigate } from 'umi';
+import { request, updateLineUrl } from '@/services';
 import './index.less';
 
 export default () => {
@@ -57,8 +58,32 @@ export default () => {
     })
   }
 
+  //线路切换
+  const [lineUrl, setLineUrl] = useState("");
+  useEffect(() => {
+    window.electron.getSettings("line").then(line => {
+      const value = line || 'http://bahasaindo.net/prod-api';
+      handleSwitchLine(value);
+    })
+  }, [])
+  const handleSwitchLine = value => {
+    setLineUrl(value);
+    updateLineUrl(value); // 更新线路并重新配置请求
+    window.electron.setSettings("line", value);
+  };
+
   return (
     <div className="home">
+      <Select
+        className="switchLine"
+        value={lineUrl}
+        onChange={handleSwitchLine}
+        options={[
+          { label: '香港线路', value: 'http://bahasaindo.net/prod-api' },
+          { label: '大陆线路', value: 'http://study.bahasaindo.cn/prod-api' },
+          { label: '台湾线路', value: 'http://bahasaindo.com/prod-api', disabled: true },
+        ]}
+      />
       <div className="homeContainer">
         <Image
           src='./image/login_home.png'

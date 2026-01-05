@@ -1,13 +1,23 @@
-import { Modal } from 'antd'
 import { extend } from "umi-request";
 
-export const request = extend({
-  prefix: 'http://studypc.bahasaindo.net/prod-api',
-  timeout: 10000,
-  errorHandler: function (error) {
-    window.location.href = "/#/login";
-  }
-});
+let lineUrl = "";
+// 函数来创建 request 实例
+const createRequest = () => {
+  return extend({
+    prefix: lineUrl,
+    timeout: 10000,
+    errorHandler: function (error) {
+      window.location.href = "/#/login";
+    },
+  });
+};
+
+// 更新线路url
+let request = createRequest();
+const updateLineUrl = (url) => {
+  lineUrl = url; // 更新线路
+  request = createRequest(); // 重新创建请求实例
+};
 
 //请求拦截
 request.interceptors.request.use((url, options) => {
@@ -45,4 +55,6 @@ request.interceptors.response.use(async (response, options) => {
   }
   return response
 })
+
+export { request, updateLineUrl };
 
