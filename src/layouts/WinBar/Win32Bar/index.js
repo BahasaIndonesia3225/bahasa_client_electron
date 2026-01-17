@@ -12,7 +12,7 @@ import {
 } from '@ant-design/icons';
 import "./index.less"
 
-export default ({ isLogin, isHomePage, dumpBack, dumpSetting, notice }) => {
+export default ({ isLogin, isHomePage, dumpBack, dumpSetting, notice, version }) => {
 
   const [isMaximize, setIsMaximize] = useState(false);
   useEffect(() => {
@@ -33,7 +33,7 @@ export default ({ isLogin, isHomePage, dumpBack, dumpSetting, notice }) => {
     <div className="Win32Bar" >
       <div className="leftMenu">
         <img alt="" src="./image/client_icon.png"/>
-        <span className="title">东东印尼语</span>
+        <span className="title">东东印尼语 { version }</span>
         <div className="split-line"></div>
         {!isHomePage && (
           <LeftOutlined
@@ -98,7 +98,7 @@ export default ({ isLogin, isHomePage, dumpBack, dumpSetting, notice }) => {
           title="关闭"
           className="iconfont"
           onClick={() => {
-            window.electron.closeWindow()
+            window.electron.closeWindow();
           }}
         />
       </div>

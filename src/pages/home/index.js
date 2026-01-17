@@ -62,7 +62,7 @@ export default () => {
   const [lineUrl, setLineUrl] = useState("");
   useEffect(() => {
     window.electron.getSettings("line").then(line => {
-      const value = line || 'http://bahasaindo.net/prod-api';
+      const value = line || 'http://study.bahasaindo.cn/prod-api';
       handleSwitchLine(value);
     })
   }, [])
@@ -79,8 +79,8 @@ export default () => {
         value={lineUrl}
         onChange={handleSwitchLine}
         options={[
-          { label: '香港线路', value: 'http://bahasaindo.net/prod-api' },
           { label: '大陆线路', value: 'http://study.bahasaindo.cn/prod-api' },
+          { label: '香港线路', value: 'http://bahasaindo.net/prod-api' },
           { label: '台湾线路', value: 'http://bahasaindo.com/prod-api', disabled: true },
         ]}
       />

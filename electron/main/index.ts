@@ -110,7 +110,7 @@ app.on('activate', () => {
 });
 
 ipcMain.on('open-url', (event, url) => { shell.openExternal(url) });
-ipcMain.handle('close-window', () => { mainWindow.close() });
+ipcMain.handle('close-Window', () => { mainWindow.close() });
 ipcMain.handle('minimize-window', () => { mainWindow.minimize() })
 ipcMain.handle('maximize-window', () => {
   if (mainWindow.isMaximized()) {

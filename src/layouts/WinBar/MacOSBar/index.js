@@ -4,13 +4,13 @@ import Marquee from 'react-fast-marquee';
 import { SettingOutlined, LeftOutlined } from '@ant-design/icons';
 import "./index.less"
 
-export default ({ isLogin, isHomePage, dumpBack, dumpSetting, notice }) => {
+export default ({ isLogin, isHomePage, dumpBack, dumpSetting, notice, version }) => {
 
   return (
     <div className="MacOSBar" >
       <div className="leftMenu">
         <img alt="" src="./image/client_icon.png"/>
-        <span className="title">东东印尼语</span>
+        <span className="title">东东印尼语 { version }</span>
         <div className="split-line"></div>
         {!isHomePage && (
           <LeftOutlined

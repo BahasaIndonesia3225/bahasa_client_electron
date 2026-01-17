@@ -37,6 +37,7 @@ const WinBar = (props) => {
     setNotice(remark);
   }
 
+  const version = 'V1.08';
   const isLogin = !!props.token;
   const isHomePage = pathname === '/';
   const isMacOS = platform === 'darwin';
@@ -50,6 +51,7 @@ const WinBar = (props) => {
       isHomePage={isHomePage}
       dumpBack={dumpBack}
       dumpSetting={dumpSetting}
+      version={version}
     />
   )
 }
